@@ -1,0 +1,15 @@
+services:
+  forge-service:
+    build: .
+    container_name: forge-ci-service
+    environment:
+      PORT: 4020
+      RELEASE_VERSION: demo-2026.07
+      DEPLOY_TARGET: docker-compose
+    ports:
+      - "4020:4020"
+    healthcheck:
+      test: ["CMD-SHELL", 'wget -qO- http://localhost:4020/health | grep -q ''"status":"ok"''']
+      interval: 10s
+      timeout: 5s
+      retries: 5
